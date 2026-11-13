@@ -1,0 +1,413 @@
+{
+  "schema": "strue.record/v1",
+  "repo": "OWNER/strue",
+  "generated_at": "2026-11-13T16:44:40Z",
+  "inspected_on": null,
+  "counts": {
+    "verified": 0,
+    "failing": 0,
+    "unknown": 11
+  },
+  "recipes": [
+    {
+      "id": "eslint-flat-config",
+      "title": "ESLint flat config that lints JavaScript with the recommended rules",
+      "intent": "Set up ESLint for a JavaScript project and confirm it reports an unused variable.",
+      "source": "https://eslint.org/docs/latest/use/getting-started",
+      "runtime": "node",
+      "tags": [
+        "node",
+        "eslint",
+        "lint",
+        "javascript"
+      ],
+      "notes": "",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {
+        "eslint.config.mjs": "import js from \"@eslint/js\";\nimport { defineConfig } from \"eslint/config\";\n\nexport default defineConfig([\n  { files: [\"**/*.js\"], plugins: { js }, extends: [\"js/recommended\"] },\n]);\n",
+        "good.js": "export const answer = 42;\n",
+        "bad.js": "const unused = 1;\nexport const answer = 42;\n",
+        ".eslintrc.json": "{ \"extends\": \"eslint:recommended\" }\n"
+      },
+      "steps": [
+        "npm init -y",
+        "npm install --save-dev eslint @eslint/js",
+        "npx eslint good.js"
+      ],
+      "check": {
+        "run": "(npx eslint bad.js > lint.txt || true) && grep -q \"no-unused-vars\" lint.txt && echo strue-ok",
+        "expect": "strue-ok"
+      },
+      "avoid": [
+        {
+          "run": "npx eslint -c .eslintrc.json good.js",
+          "why": "ESLint no longer reads .eslintrc files; configuration must be an eslint.config.js flat config.",
+          "still_fails": null
+        }
+      ],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/eslint-flat-config.yaml"
+    },
+    {
+      "id": "express5-hello",
+      "title": "Express 5 server with a JSON route and a wildcard route",
+      "intent": "Create an Express server with a JSON endpoint and a catch-all path segment.",
+      "source": "https://expressjs.com/en/guide/migrating-5.html",
+      "runtime": "node",
+      "tags": [
+        "node",
+        "express",
+        "web",
+        "api"
+      ],
+      "notes": "",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {
+        "app.mjs": "import express from \"express\";\n\nconst app = express();\napp.get(\"/\", (req, res) => res.json({ message: \"Hello World\" }));\napp.get(\"/files/*splat\", (req, res) => res.json({ path: req.params.splat }));\n\nconst server = app.listen(0, async () => {\n  const { port } = server.address();\n  const root = await (await fetch(`http://127.0.0.1:${port}/`)).json();\n  const file = await (await fetch(`http://127.0.0.1:${port}/files/a/b.txt`)).json();\n  server.close();\n  if (root.message !== \"Hello World\") throw new Error(\"root route failed\");\n  if (file.path.join(\"/\") !== \"a/b.txt\") throw new Error(\"wildcard route failed\");\n  console.log(\"strue-ok\");\n});\n",
+        "stale.mjs": "import express from \"express\";\n\nconst app = express();\napp.get(\"*\", (req, res) => res.send(\"catch-all\"));\n"
+      },
+      "steps": [
+        "npm init -y",
+        "npm install express"
+      ],
+      "check": {
+        "run": "node app.mjs",
+        "expect": "strue-ok"
+      },
+      "avoid": [
+        {
+          "run": "node stale.mjs",
+          "why": "Express 5 rejects a bare \"*\" path; wildcards need a name, such as \"/*splat\".",
+          "still_fails": null
+        }
+      ],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/express5-hello.yaml"
+    },
+    {
+      "id": "fastapi-hello",
+      "title": "FastAPI hello-world app that answers a request",
+      "intent": "Create a minimal FastAPI app and confirm it returns JSON.",
+      "source": "https://fastapi.tiangolo.com/tutorial/first-steps/",
+      "runtime": "python",
+      "tags": [
+        "python",
+        "fastapi",
+        "web",
+        "api"
+      ],
+      "notes": "",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {
+        "main.py": "from fastapi import FastAPI\n\napp = FastAPI()\n\n\n@app.get(\"/\")\ndef root():\n    return {\"message\": \"Hello World\"}\n",
+        "check.py": "from fastapi.testclient import TestClient\n\nfrom main import app\n\nresponse = TestClient(app).get(\"/\")\nassert response.status_code == 200, response.status_code\nassert response.json() == {\"message\": \"Hello World\"}, response.text\nprint(\"strue-ok\")\n"
+      },
+      "steps": [
+        "pip install \"fastapi[standard]\""
+      ],
+      "check": {
+        "run": "python check.py",
+        "expect": "strue-ok"
+      },
+      "avoid": [],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/fastapi-hello.yaml"
+    },
+    {
+      "id": "langchain-core-chain",
+      "title": "LangChain prompt-to-parser chain with current import paths",
+      "intent": "Build a LangChain runnable chain from a chat prompt using langchain-core imports.",
+      "source": "https://python.langchain.com/docs/concepts/lcel/",
+      "runtime": "python",
+      "tags": [
+        "python",
+        "langchain",
+        "llm"
+      ],
+      "notes": "A stand-in function plays the model, so no API key is needed. The check proves the import paths and the pipe composition still work.",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {
+        "check.py": "from langchain_core.messages import AIMessage\nfrom langchain_core.output_parsers import StrOutputParser\nfrom langchain_core.prompts import ChatPromptTemplate\nfrom langchain_core.runnables import RunnableLambda\n\nprompt = ChatPromptTemplate.from_messages(\n    [(\"system\", \"You are terse.\"), (\"human\", \"{question}\")]\n)\nfake_model = RunnableLambda(\n    lambda value: AIMessage(content=\"echo:\" + value.to_messages()[-1].content)\n)\nchain = prompt | fake_model | StrOutputParser()\nassert chain.invoke({\"question\": \"hi\"}) == \"echo:hi\"\nprint(\"strue-ok\")\n"
+      },
+      "steps": [
+        "pip install langchain langchain-core"
+      ],
+      "check": {
+        "run": "python check.py",
+        "expect": "strue-ok"
+      },
+      "avoid": [
+        {
+          "run": "python -c \"from langchain.chains import LLMChain\"",
+          "why": "langchain.chains and LLMChain are no longer in the langchain package; compose runnables from langchain_core instead.",
+          "still_fails": null
+        }
+      ],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/langchain-core-chain.yaml"
+    },
+    {
+      "id": "mcp-python-server",
+      "title": "MCP server in Python with one tool, called by an in-process client",
+      "intent": "Write an MCP server with the official Python SDK and call its tool.",
+      "source": "https://github.com/modelcontextprotocol/python-sdk",
+      "runtime": "python",
+      "tags": [
+        "python",
+        "mcp",
+        "agents"
+      ],
+      "notes": "",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {
+        "check.py": "import anyio\nfrom mcp import Client\nfrom mcp.server.mcpserver import MCPServer\n\nserver = MCPServer(\"demo\")\n\n\n@server.tool()\ndef add(a: int, b: int) -> int:\n    \"\"\"Add two numbers.\"\"\"\n    return a + b\n\n\nasync def main() -> None:\n    async with Client(server) as client:\n        tools = await client.list_tools()\n        assert [tool.name for tool in tools.tools] == [\"add\"]\n        result = await client.call_tool(\"add\", {\"a\": 2, \"b\": 3})\n        assert result.content[0].text == \"5\", result\n    print(\"strue-ok\")\n\n\nanyio.run(main)\n"
+      },
+      "steps": [
+        "pip install mcp"
+      ],
+      "check": {
+        "run": "python check.py",
+        "expect": "strue-ok"
+      },
+      "avoid": [
+        {
+          "run": "python -c \"from mcp.server.fastmcp import FastMCP\"",
+          "why": "In mcp 2.x FastMCP was renamed; import MCPServer from mcp.server.mcpserver.",
+          "still_fails": null
+        }
+      ],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/mcp-python-server.yaml"
+    },
+    {
+      "id": "nextjs-app-build",
+      "title": "Next.js app created with create-next-app and built for production",
+      "intent": "Create a new Next.js app with the default template and run a production build.",
+      "source": "https://nextjs.org/docs/app/getting-started/installation",
+      "runtime": "node",
+      "tags": [
+        "node",
+        "nextjs",
+        "react",
+        "frontend"
+      ],
+      "notes": "The default template downloads Google Fonts during the build, so this needs open internet access.",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {},
+      "steps": [
+        "npx create-next-app@latest app --yes --use-npm",
+        {
+          "run": "npm run build",
+          "cwd": "app"
+        }
+      ],
+      "check": {
+        "run": "test -d .next && echo strue-ok",
+        "cwd": "app",
+        "expect": "strue-ok"
+      },
+      "avoid": [],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/nextjs-app-build.yaml"
+    },
+    {
+      "id": "openai-python-client",
+      "title": "OpenAI Python SDK client object and its request surfaces",
+      "intent": "Install the OpenAI Python SDK and construct a client the current way.",
+      "source": "https://github.com/openai/openai-python",
+      "runtime": "python",
+      "tags": [
+        "python",
+        "openai",
+        "llm",
+        "sdk"
+      ],
+      "notes": "No network call is made and no real key is needed. The check proves the import path, the client constructor and the presence of the request surfaces.",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {
+        "check.py": "from openai import OpenAI\n\nclient = OpenAI(api_key=\"sk-not-a-real-key\")\nassert callable(client.responses.create)\nassert callable(client.chat.completions.create)\nassert callable(client.embeddings.create)\nprint(\"strue-ok\")\n",
+        "stale.py": "import openai\n\nopenai.api_key = \"sk-not-a-real-key\"\nopenai.ChatCompletion.create(model=\"gpt-4\", messages=[])\n"
+      },
+      "steps": [
+        "pip install openai"
+      ],
+      "check": {
+        "run": "python check.py",
+        "expect": "strue-ok"
+      },
+      "avoid": [
+        {
+          "run": "python stale.py",
+          "why": "The module-level openai.ChatCompletion API was removed in openai 1.0; use a client object.",
+          "still_fails": null
+        }
+      ],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/openai-python-client.yaml"
+    },
+    {
+      "id": "pydantic-v2-model",
+      "title": "Pydantic v2 model with validation and JSON round trip",
+      "intent": "Define a Pydantic model, validate input, and serialise it with the v2 API.",
+      "source": "https://docs.pydantic.dev/latest/concepts/models/",
+      "runtime": "python",
+      "tags": [
+        "python",
+        "pydantic",
+        "validation"
+      ],
+      "notes": "",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {
+        "check.py": "from pydantic import BaseModel, ValidationError, field_validator\n\n\nclass User(BaseModel):\n    id: int\n    name: str\n\n    @field_validator(\"name\")\n    @classmethod\n    def name_not_blank(cls, value: str) -> str:\n        if not value.strip():\n            raise ValueError(\"name must not be blank\")\n        return value\n\n\nuser = User.model_validate({\"id\": \"7\", \"name\": \"Asha\"})\nassert user.id == 7\nassert user.model_dump() == {\"id\": 7, \"name\": \"Asha\"}\nassert User.model_validate_json(user.model_dump_json()) == user\ntry:\n    User.model_validate({\"id\": 1, \"name\": \" \"})\nexcept ValidationError:\n    print(\"strue-ok\")\n"
+      },
+      "steps": [
+        "pip install pydantic"
+      ],
+      "check": {
+        "run": "python check.py",
+        "expect": "strue-ok"
+      },
+      "avoid": [],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/pydantic-v2-model.yaml"
+    },
+    {
+      "id": "tailwind4-cli-build",
+      "title": "Tailwind CSS v4 stylesheet built with the standalone CLI package",
+      "intent": "Install Tailwind CSS and compile a stylesheet that contains the classes used in an HTML file.",
+      "source": "https://tailwindcss.com/docs/installation/tailwind-cli",
+      "runtime": "node",
+      "tags": [
+        "node",
+        "tailwind",
+        "css",
+        "frontend"
+      ],
+      "notes": "",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {
+        "src/input.css": "@import \"tailwindcss\";\n",
+        "index.html": "<!doctype html>\n<html>\n  <body>\n    <h1 class=\"text-3xl font-bold underline\">Hello</h1>\n  </body>\n</html>\n"
+      },
+      "steps": [
+        "npm init -y",
+        "npm install tailwindcss @tailwindcss/cli",
+        "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css"
+      ],
+      "check": {
+        "run": "grep -q \"text-3xl\" dist/output.css && grep -q \"underline\" dist/output.css && echo strue-ok",
+        "expect": "strue-ok"
+      },
+      "avoid": [
+        {
+          "run": "npx tailwindcss init -p && test -f tailwind.config.js",
+          "why": "Tailwind v4 has no init command and no generated tailwind.config.js; configuration lives in CSS.",
+          "still_fails": null
+        }
+      ],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/tailwind4-cli-build.yaml"
+    },
+    {
+      "id": "uv-new-project",
+      "title": "New Python project with uv, one dependency, and a run",
+      "intent": "Start a Python project with uv, add a dependency and run code inside it.",
+      "source": "https://docs.astral.sh/uv/guides/projects/",
+      "runtime": "python",
+      "tags": [
+        "python",
+        "uv",
+        "packaging"
+      ],
+      "notes": "",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {},
+      "steps": [
+        "pip install uv",
+        "uv init demo",
+        {
+          "run": "uv add httpx",
+          "cwd": "demo"
+        }
+      ],
+      "check": {
+        "run": "uv run python -c \"import httpx; print('strue-ok', httpx.__version__)\"",
+        "cwd": "demo",
+        "expect": "strue-ok"
+      },
+      "avoid": [],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/uv-new-project.yaml"
+    },
+    {
+      "id": "vite-react-ts-build",
+      "title": "Vite React + TypeScript app scaffolded and built",
+      "intent": "Scaffold a React TypeScript app with Vite and produce a production build.",
+      "source": "https://vite.dev/guide/",
+      "runtime": "node",
+      "tags": [
+        "node",
+        "vite",
+        "react",
+        "typescript",
+        "frontend"
+      ],
+      "notes": "",
+      "status": "unknown",
+      "inspected_on": null,
+      "verified_streak_days": 0,
+      "files": {},
+      "steps": [
+        "npm create vite@latest app -- --template react-ts",
+        {
+          "run": "npm install",
+          "cwd": "app"
+        },
+        {
+          "run": "npm run build",
+          "cwd": "app"
+        }
+      ],
+      "check": {
+        "run": "test -f dist/index.html && echo strue-ok",
+        "cwd": "app",
+        "expect": "strue-ok"
+      },
+      "avoid": [],
+      "os": {},
+      "history": [],
+      "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/vite-react-ts-build.yaml"
+    }
+  ]
+}

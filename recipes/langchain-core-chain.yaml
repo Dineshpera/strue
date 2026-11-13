@@ -1,0 +1,34 @@
+id: langchain-core-chain
+title: LangChain prompt-to-parser chain with current import paths
+intent: Build a LangChain runnable chain from a chat prompt using langchain-core imports.
+source: https://python.langchain.com/docs/concepts/lcel/
+runtime: python
+tags: [python, langchain, llm]
+notes: >
+  A stand-in function plays the model, so no API key is needed. The check proves
+  the import paths and the pipe composition still work.
+files:
+  check.py: |
+    from langchain_core.messages import AIMessage
+    from langchain_core.output_parsers import StrOutputParser
+    from langchain_core.prompts import ChatPromptTemplate
+    from langchain_core.runnables import RunnableLambda
+
+    prompt = ChatPromptTemplate.from_messages(
+        [("system", "You are terse."), ("human", "{question}")]
+    )
+    fake_model = RunnableLambda(
+        lambda value: AIMessage(content="echo:" + value.to_messages()[-1].content)
+    )
+    chain = prompt | fake_model | StrOutputParser()
+    assert chain.invoke({"question": "hi"}) == "echo:hi"
+    print("strue-ok")
+steps:
+  - pip install langchain langchain-core
+check:
+  run: python check.py
+  expect: strue-ok
+track: [langchain, langchain-core]
+avoid:
+  - run: python -c "from langchain.chains import LLMChain"
+    why: langchain.chains and LLMChain are no longer in the langchain package; compose runnables from langchain_core instead.

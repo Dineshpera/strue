@@ -1,0 +1,39 @@
+{
+  "id": "express5-hello",
+  "title": "Express 5 server with a JSON route and a wildcard route",
+  "intent": "Create an Express server with a JSON endpoint and a catch-all path segment.",
+  "source": "https://expressjs.com/en/guide/migrating-5.html",
+  "runtime": "node",
+  "tags": [
+    "node",
+    "express",
+    "web",
+    "api"
+  ],
+  "notes": "",
+  "status": "unknown",
+  "inspected_on": null,
+  "verified_streak_days": 0,
+  "files": {
+    "app.mjs": "import express from \"express\";\n\nconst app = express();\napp.get(\"/\", (req, res) => res.json({ message: \"Hello World\" }));\napp.get(\"/files/*splat\", (req, res) => res.json({ path: req.params.splat }));\n\nconst server = app.listen(0, async () => {\n  const { port } = server.address();\n  const root = await (await fetch(`http://127.0.0.1:${port}/`)).json();\n  const file = await (await fetch(`http://127.0.0.1:${port}/files/a/b.txt`)).json();\n  server.close();\n  if (root.message !== \"Hello World\") throw new Error(\"root route failed\");\n  if (file.path.join(\"/\") !== \"a/b.txt\") throw new Error(\"wildcard route failed\");\n  console.log(\"strue-ok\");\n});\n",
+    "stale.mjs": "import express from \"express\";\n\nconst app = express();\napp.get(\"*\", (req, res) => res.send(\"catch-all\"));\n"
+  },
+  "steps": [
+    "npm init -y",
+    "npm install express"
+  ],
+  "check": {
+    "run": "node app.mjs",
+    "expect": "strue-ok"
+  },
+  "avoid": [
+    {
+      "run": "node stale.mjs",
+      "why": "Express 5 rejects a bare \"*\" path; wildcards need a name, such as \"/*splat\".",
+      "still_fails": null
+    }
+  ],
+  "os": {},
+  "history": [],
+  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/express5-hello.yaml"
+}

@@ -1,0 +1,34 @@
+{
+  "id": "uv-new-project",
+  "title": "New Python project with uv, one dependency, and a run",
+  "intent": "Start a Python project with uv, add a dependency and run code inside it.",
+  "source": "https://docs.astral.sh/uv/guides/projects/",
+  "runtime": "python",
+  "tags": [
+    "python",
+    "uv",
+    "packaging"
+  ],
+  "notes": "",
+  "status": "unknown",
+  "inspected_on": null,
+  "verified_streak_days": 0,
+  "files": {},
+  "steps": [
+    "pip install uv",
+    "uv init demo",
+    {
+      "run": "uv add httpx",
+      "cwd": "demo"
+    }
+  ],
+  "check": {
+    "run": "uv run python -c \"import httpx; print('strue-ok', httpx.__version__)\"",
+    "cwd": "demo",
+    "expect": "strue-ok"
+  },
+  "avoid": [],
+  "os": {},
+  "history": [],
+  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/uv-new-project.yaml"
+}

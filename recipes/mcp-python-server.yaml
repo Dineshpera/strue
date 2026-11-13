@@ -1,0 +1,40 @@
+id: mcp-python-server
+title: MCP server in Python with one tool, called by an in-process client
+intent: Write an MCP server with the official Python SDK and call its tool.
+source: https://github.com/modelcontextprotocol/python-sdk
+runtime: python
+tags: [python, mcp, agents]
+files:
+  check.py: |
+    import anyio
+    from mcp import Client
+    from mcp.server.mcpserver import MCPServer
+
+    server = MCPServer("demo")
+
+
+    @server.tool()
+    def add(a: int, b: int) -> int:
+        """Add two numbers."""
+        return a + b
+
+
+    async def main() -> None:
+        async with Client(server) as client:
+            tools = await client.list_tools()
+            assert [tool.name for tool in tools.tools] == ["add"]
+            result = await client.call_tool("add", {"a": 2, "b": 3})
+            assert result.content[0].text == "5", result
+        print("strue-ok")
+
+
+    anyio.run(main)
+steps:
+  - pip install mcp
+check:
+  run: python check.py
+  expect: strue-ok
+track: [mcp]
+avoid:
+  - run: python -c "from mcp.server.fastmcp import FastMCP"
+    why: In mcp 2.x FastMCP was renamed; import MCPServer from mcp.server.mcpserver.

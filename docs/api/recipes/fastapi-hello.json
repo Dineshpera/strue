@@ -1,0 +1,32 @@
+{
+  "id": "fastapi-hello",
+  "title": "FastAPI hello-world app that answers a request",
+  "intent": "Create a minimal FastAPI app and confirm it returns JSON.",
+  "source": "https://fastapi.tiangolo.com/tutorial/first-steps/",
+  "runtime": "python",
+  "tags": [
+    "python",
+    "fastapi",
+    "web",
+    "api"
+  ],
+  "notes": "",
+  "status": "unknown",
+  "inspected_on": null,
+  "verified_streak_days": 0,
+  "files": {
+    "main.py": "from fastapi import FastAPI\n\napp = FastAPI()\n\n\n@app.get(\"/\")\ndef root():\n    return {\"message\": \"Hello World\"}\n",
+    "check.py": "from fastapi.testclient import TestClient\n\nfrom main import app\n\nresponse = TestClient(app).get(\"/\")\nassert response.status_code == 200, response.status_code\nassert response.json() == {\"message\": \"Hello World\"}, response.text\nprint(\"strue-ok\")\n"
+  },
+  "steps": [
+    "pip install \"fastapi[standard]\""
+  ],
+  "check": {
+    "run": "python check.py",
+    "expect": "strue-ok"
+  },
+  "avoid": [],
+  "os": {},
+  "history": [],
+  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/fastapi-hello.yaml"
+}

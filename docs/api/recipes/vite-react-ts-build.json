@@ -1,0 +1,39 @@
+{
+  "id": "vite-react-ts-build",
+  "title": "Vite React + TypeScript app scaffolded and built",
+  "intent": "Scaffold a React TypeScript app with Vite and produce a production build.",
+  "source": "https://vite.dev/guide/",
+  "runtime": "node",
+  "tags": [
+    "node",
+    "vite",
+    "react",
+    "typescript",
+    "frontend"
+  ],
+  "notes": "",
+  "status": "unknown",
+  "inspected_on": null,
+  "verified_streak_days": 0,
+  "files": {},
+  "steps": [
+    "npm create vite@latest app -- --template react-ts",
+    {
+      "run": "npm install",
+      "cwd": "app"
+    },
+    {
+      "run": "npm run build",
+      "cwd": "app"
+    }
+  ],
+  "check": {
+    "run": "test -f dist/index.html && echo strue-ok",
+    "cwd": "app",
+    "expect": "strue-ok"
+  },
+  "avoid": [],
+  "os": {},
+  "history": [],
+  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/vite-react-ts-build.yaml"
+}

@@ -1,0 +1,20 @@
+id: nextjs-app-build
+title: Next.js app created with create-next-app and built for production
+intent: Create a new Next.js app with the default template and run a production build.
+source: https://nextjs.org/docs/app/getting-started/installation
+runtime: node
+tags: [node, nextjs, react, frontend]
+timeout: 900
+notes: >
+  The default template downloads Google Fonts during the build, so this needs
+  open internet access.
+steps:
+  - npx create-next-app@latest app --yes --use-npm
+  - run: npm run build
+    cwd: app
+check:
+  run: test -d .next && echo strue-ok
+  cwd: app
+  expect: strue-ok
+track: [next, react]
+track_in: app

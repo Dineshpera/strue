@@ -1,0 +1,42 @@
+{
+  "id": "eslint-flat-config",
+  "title": "ESLint flat config that lints JavaScript with the recommended rules",
+  "intent": "Set up ESLint for a JavaScript project and confirm it reports an unused variable.",
+  "source": "https://eslint.org/docs/latest/use/getting-started",
+  "runtime": "node",
+  "tags": [
+    "node",
+    "eslint",
+    "lint",
+    "javascript"
+  ],
+  "notes": "",
+  "status": "unknown",
+  "inspected_on": null,
+  "verified_streak_days": 0,
+  "files": {
+    "eslint.config.mjs": "import js from \"@eslint/js\";\nimport { defineConfig } from \"eslint/config\";\n\nexport default defineConfig([\n  { files: [\"**/*.js\"], plugins: { js }, extends: [\"js/recommended\"] },\n]);\n",
+    "good.js": "export const answer = 42;\n",
+    "bad.js": "const unused = 1;\nexport const answer = 42;\n",
+    ".eslintrc.json": "{ \"extends\": \"eslint:recommended\" }\n"
+  },
+  "steps": [
+    "npm init -y",
+    "npm install --save-dev eslint @eslint/js",
+    "npx eslint good.js"
+  ],
+  "check": {
+    "run": "(npx eslint bad.js > lint.txt || true) && grep -q \"no-unused-vars\" lint.txt && echo strue-ok",
+    "expect": "strue-ok"
+  },
+  "avoid": [
+    {
+      "run": "npx eslint -c .eslintrc.json good.js",
+      "why": "ESLint no longer reads .eslintrc files; configuration must be an eslint.config.js flat config.",
+      "still_fails": null
+    }
+  ],
+  "os": {},
+  "history": [],
+  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/eslint-flat-config.yaml"
+}

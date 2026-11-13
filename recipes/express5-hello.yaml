@@ -1,0 +1,38 @@
+id: express5-hello
+title: Express 5 server with a JSON route and a wildcard route
+intent: Create an Express server with a JSON endpoint and a catch-all path segment.
+source: https://expressjs.com/en/guide/migrating-5.html
+runtime: node
+tags: [node, express, web, api]
+files:
+  app.mjs: |
+    import express from "express";
+
+    const app = express();
+    app.get("/", (req, res) => res.json({ message: "Hello World" }));
+    app.get("/files/*splat", (req, res) => res.json({ path: req.params.splat }));
+
+    const server = app.listen(0, async () => {
+      const { port } = server.address();
+      const root = await (await fetch(`http://127.0.0.1:${port}/`)).json();
+      const file = await (await fetch(`http://127.0.0.1:${port}/files/a/b.txt`)).json();
+      server.close();
+      if (root.message !== "Hello World") throw new Error("root route failed");
+      if (file.path.join("/") !== "a/b.txt") throw new Error("wildcard route failed");
+      console.log("strue-ok");
+    });
+  stale.mjs: |
+    import express from "express";
+
+    const app = express();
+    app.get("*", (req, res) => res.send("catch-all"));
+steps:
+  - npm init -y
+  - npm install express
+check:
+  run: node app.mjs
+  expect: strue-ok
+track: [express]
+avoid:
+  - run: node stale.mjs
+    why: Express 5 rejects a bare "*" path; wildcards need a name, such as "/*splat".

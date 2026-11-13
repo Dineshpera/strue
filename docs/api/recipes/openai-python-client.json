@@ -1,0 +1,38 @@
+{
+  "id": "openai-python-client",
+  "title": "OpenAI Python SDK client object and its request surfaces",
+  "intent": "Install the OpenAI Python SDK and construct a client the current way.",
+  "source": "https://github.com/openai/openai-python",
+  "runtime": "python",
+  "tags": [
+    "python",
+    "openai",
+    "llm",
+    "sdk"
+  ],
+  "notes": "No network call is made and no real key is needed. The check proves the import path, the client constructor and the presence of the request surfaces.",
+  "status": "unknown",
+  "inspected_on": null,
+  "verified_streak_days": 0,
+  "files": {
+    "check.py": "from openai import OpenAI\n\nclient = OpenAI(api_key=\"sk-not-a-real-key\")\nassert callable(client.responses.create)\nassert callable(client.chat.completions.create)\nassert callable(client.embeddings.create)\nprint(\"strue-ok\")\n",
+    "stale.py": "import openai\n\nopenai.api_key = \"sk-not-a-real-key\"\nopenai.ChatCompletion.create(model=\"gpt-4\", messages=[])\n"
+  },
+  "steps": [
+    "pip install openai"
+  ],
+  "check": {
+    "run": "python check.py",
+    "expect": "strue-ok"
+  },
+  "avoid": [
+    {
+      "run": "python stale.py",
+      "why": "The module-level openai.ChatCompletion API was removed in openai 1.0; use a client object.",
+      "still_fails": null
+    }
+  ],
+  "os": {},
+  "history": [],
+  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/openai-python-client.yaml"
+}

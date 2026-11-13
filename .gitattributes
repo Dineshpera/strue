@@ -1,0 +1,5 @@
+# Result files are signed by digest. Never let git rewrite their line endings.
+results/** -text
+docs/api/** -text
+*.yaml text eol=lf
+*.py text eol=lf

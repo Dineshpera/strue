@@ -1,0 +1,32 @@
+id: eslint-flat-config
+title: ESLint flat config that lints JavaScript with the recommended rules
+intent: Set up ESLint for a JavaScript project and confirm it reports an unused variable.
+source: https://eslint.org/docs/latest/use/getting-started
+runtime: node
+tags: [node, eslint, lint, javascript]
+files:
+  eslint.config.mjs: |
+    import js from "@eslint/js";
+    import { defineConfig } from "eslint/config";
+
+    export default defineConfig([
+      { files: ["**/*.js"], plugins: { js }, extends: ["js/recommended"] },
+    ]);
+  good.js: |
+    export const answer = 42;
+  bad.js: |
+    const unused = 1;
+    export const answer = 42;
+  .eslintrc.json: |
+    { "extends": "eslint:recommended" }
+steps:
+  - npm init -y
+  - npm install --save-dev eslint @eslint/js
+  - npx eslint good.js
+check:
+  run: (npx eslint bad.js > lint.txt || true) && grep -q "no-unused-vars" lint.txt && echo strue-ok
+  expect: strue-ok
+track: [eslint, "@eslint/js"]
+avoid:
+  - run: npx eslint -c .eslintrc.json good.js
+    why: ESLint no longer reads .eslintrc files; configuration must be an eslint.config.js flat config.

@@ -1,0 +1,36 @@
+{
+  "id": "langchain-core-chain",
+  "title": "LangChain prompt-to-parser chain with current import paths",
+  "intent": "Build a LangChain runnable chain from a chat prompt using langchain-core imports.",
+  "source": "https://python.langchain.com/docs/concepts/lcel/",
+  "runtime": "python",
+  "tags": [
+    "python",
+    "langchain",
+    "llm"
+  ],
+  "notes": "A stand-in function plays the model, so no API key is needed. The check proves the import paths and the pipe composition still work.",
+  "status": "unknown",
+  "inspected_on": null,
+  "verified_streak_days": 0,
+  "files": {
+    "check.py": "from langchain_core.messages import AIMessage\nfrom langchain_core.output_parsers import StrOutputParser\nfrom langchain_core.prompts import ChatPromptTemplate\nfrom langchain_core.runnables import RunnableLambda\n\nprompt = ChatPromptTemplate.from_messages(\n    [(\"system\", \"You are terse.\"), (\"human\", \"{question}\")]\n)\nfake_model = RunnableLambda(\n    lambda value: AIMessage(content=\"echo:\" + value.to_messages()[-1].content)\n)\nchain = prompt | fake_model | StrOutputParser()\nassert chain.invoke({\"question\": \"hi\"}) == \"echo:hi\"\nprint(\"strue-ok\")\n"
+  },
+  "steps": [
+    "pip install langchain langchain-core"
+  ],
+  "check": {
+    "run": "python check.py",
+    "expect": "strue-ok"
+  },
+  "avoid": [
+    {
+      "run": "python -c \"from langchain.chains import LLMChain\"",
+      "why": "langchain.chains and LLMChain are no longer in the langchain package; compose runnables from langchain_core instead.",
+      "still_fails": null
+    }
+  ],
+  "os": {},
+  "history": [],
+  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/langchain-core-chain.yaml"
+}

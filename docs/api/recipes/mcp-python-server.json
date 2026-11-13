@@ -1,0 +1,36 @@
+{
+  "id": "mcp-python-server",
+  "title": "MCP server in Python with one tool, called by an in-process client",
+  "intent": "Write an MCP server with the official Python SDK and call its tool.",
+  "source": "https://github.com/modelcontextprotocol/python-sdk",
+  "runtime": "python",
+  "tags": [
+    "python",
+    "mcp",
+    "agents"
+  ],
+  "notes": "",
+  "status": "unknown",
+  "inspected_on": null,
+  "verified_streak_days": 0,
+  "files": {
+    "check.py": "import anyio\nfrom mcp import Client\nfrom mcp.server.mcpserver import MCPServer\n\nserver = MCPServer(\"demo\")\n\n\n@server.tool()\ndef add(a: int, b: int) -> int:\n    \"\"\"Add two numbers.\"\"\"\n    return a + b\n\n\nasync def main() -> None:\n    async with Client(server) as client:\n        tools = await client.list_tools()\n        assert [tool.name for tool in tools.tools] == [\"add\"]\n        result = await client.call_tool(\"add\", {\"a\": 2, \"b\": 3})\n        assert result.content[0].text == \"5\", result\n    print(\"strue-ok\")\n\n\nanyio.run(main)\n"
+  },
+  "steps": [
+    "pip install mcp"
+  ],
+  "check": {
+    "run": "python check.py",
+    "expect": "strue-ok"
+  },
+  "avoid": [
+    {
+      "run": "python -c \"from mcp.server.fastmcp import FastMCP\"",
+      "why": "In mcp 2.x FastMCP was renamed; import MCPServer from mcp.server.mcpserver.",
+      "still_fails": null
+    }
+  ],
+  "os": {},
+  "history": [],
+  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/mcp-python-server.yaml"
+}

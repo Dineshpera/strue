@@ -1,0 +1,37 @@
+id: pydantic-v2-model
+title: Pydantic v2 model with validation and JSON round trip
+intent: Define a Pydantic model, validate input, and serialise it with the v2 API.
+source: https://docs.pydantic.dev/latest/concepts/models/
+runtime: python
+tags: [python, pydantic, validation]
+files:
+  check.py: |
+    from pydantic import BaseModel, ValidationError, field_validator
+
+
+    class User(BaseModel):
+        id: int
+        name: str
+
+        @field_validator("name")
+        @classmethod
+        def name_not_blank(cls, value: str) -> str:
+            if not value.strip():
+                raise ValueError("name must not be blank")
+            return value
+
+
+    user = User.model_validate({"id": "7", "name": "Asha"})
+    assert user.id == 7
+    assert user.model_dump() == {"id": 7, "name": "Asha"}
+    assert User.model_validate_json(user.model_dump_json()) == user
+    try:
+        User.model_validate({"id": 1, "name": " "})
+    except ValidationError:
+        print("strue-ok")
+steps:
+  - pip install pydantic
+check:
+  run: python check.py
+  expect: strue-ok
+track: [pydantic, pydantic-core]

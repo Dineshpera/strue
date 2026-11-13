@@ -1,0 +1,40 @@
+{
+  "id": "tailwind4-cli-build",
+  "title": "Tailwind CSS v4 stylesheet built with the standalone CLI package",
+  "intent": "Install Tailwind CSS and compile a stylesheet that contains the classes used in an HTML file.",
+  "source": "https://tailwindcss.com/docs/installation/tailwind-cli",
+  "runtime": "node",
+  "tags": [
+    "node",
+    "tailwind",
+    "css",
+    "frontend"
+  ],
+  "notes": "",
+  "status": "unknown",
+  "inspected_on": null,
+  "verified_streak_days": 0,
+  "files": {
+    "src/input.css": "@import \"tailwindcss\";\n",
+    "index.html": "<!doctype html>\n<html>\n  <body>\n    <h1 class=\"text-3xl font-bold underline\">Hello</h1>\n  </body>\n</html>\n"
+  },
+  "steps": [
+    "npm init -y",
+    "npm install tailwindcss @tailwindcss/cli",
+    "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css"
+  ],
+  "check": {
+    "run": "grep -q \"text-3xl\" dist/output.css && grep -q \"underline\" dist/output.css && echo strue-ok",
+    "expect": "strue-ok"
+  },
+  "avoid": [
+    {
+      "run": "npx tailwindcss init -p && test -f tailwind.config.js",
+      "why": "Tailwind v4 has no init command and no generated tailwind.config.js; configuration lives in CSS.",
+      "still_fails": null
+    }
+  ],
+  "os": {},
+  "history": [],
+  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/tailwind4-cli-build.yaml"
+}

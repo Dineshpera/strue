@@ -1,0 +1,27 @@
+id: tailwind4-cli-build
+title: Tailwind CSS v4 stylesheet built with the standalone CLI package
+intent: Install Tailwind CSS and compile a stylesheet that contains the classes used in an HTML file.
+source: https://tailwindcss.com/docs/installation/tailwind-cli
+runtime: node
+tags: [node, tailwind, css, frontend]
+files:
+  src/input.css: |
+    @import "tailwindcss";
+  index.html: |
+    <!doctype html>
+    <html>
+      <body>
+        <h1 class="text-3xl font-bold underline">Hello</h1>
+      </body>
+    </html>
+steps:
+  - npm init -y
+  - npm install tailwindcss @tailwindcss/cli
+  - npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css
+check:
+  run: grep -q "text-3xl" dist/output.css && grep -q "underline" dist/output.css && echo strue-ok
+  expect: strue-ok
+track: [tailwindcss, "@tailwindcss/cli"]
+avoid:
+  - run: npx tailwindcss init -p && test -f tailwind.config.js
+    why: Tailwind v4 has no init command and no generated tailwind.config.js; configuration lives in CSS.

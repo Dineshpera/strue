@@ -1,0 +1,32 @@
+id: openai-python-client
+title: OpenAI Python SDK client object and its request surfaces
+intent: Install the OpenAI Python SDK and construct a client the current way.
+source: https://github.com/openai/openai-python
+runtime: python
+tags: [python, openai, llm, sdk]
+notes: >
+  No network call is made and no real key is needed. The check proves the import
+  path, the client constructor and the presence of the request surfaces.
+files:
+  check.py: |
+    from openai import OpenAI
+
+    client = OpenAI(api_key="sk-not-a-real-key")
+    assert callable(client.responses.create)
+    assert callable(client.chat.completions.create)
+    assert callable(client.embeddings.create)
+    print("strue-ok")
+  stale.py: |
+    import openai
+
+    openai.api_key = "sk-not-a-real-key"
+    openai.ChatCompletion.create(model="gpt-4", messages=[])
+steps:
+  - pip install openai
+check:
+  run: python check.py
+  expect: strue-ok
+track: [openai]
+avoid:
+  - run: python stale.py
+    why: The module-level openai.ChatCompletion API was removed in openai 1.0; use a client object.

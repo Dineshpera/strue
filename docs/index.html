@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strue — what works today</title>
+<style>
+  :root { --bg:#fbfaf7; --fg:#1d1c1a; --muted:#6b6862; --line:#e3e0d8; --card:#fff;
+          --ok:#2e7d32; --bad:#c62828; --na:#8a867e; --code:#f3f1ea; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#161614; --fg:#ecebe6; --muted:#a09c93; --line:#33322e; --card:#1e1e1b;
+            --ok:#7bc47f; --bad:#ef8a80; --na:#8a867e; --code:#262622; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg);
+         font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  main { max-width:1080px; margin:0 auto; padding:40px 20px 80px; }
+  h1 { font-size:34px; margin:0 0 4px; letter-spacing:-.01em; }
+  h4 { margin:18px 0 6px; font-size:13px; text-transform:uppercase; letter-spacing:.06em;
+       color:var(--muted); }
+  .lede { font-size:18px; max-width:62ch; margin:0 0 20px; }
+  .muted { color:var(--muted); font-size:14px; }
+  .stats { display:flex; gap:24px; flex-wrap:wrap; padding:14px 0; border-top:1px solid var(--line);
+           border-bottom:1px solid var(--line); margin-bottom:24px; }
+  .scroll { overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:10px; }
+  table { border-collapse:collapse; width:100%; min-width:760px; }
+  th, td { padding:12px 14px; text-align:left; vertical-align:top; border-bottom:1px solid var(--line); }
+  th { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  tr:last-child td { border-bottom:0; }
+  td.os, th.os, td.num, th.num { text-align:center; width:70px; }
+  td.os a { color:inherit; text-decoration:none; }
+  .ok { color:var(--ok); } .bad { color:var(--bad); } .na { color:var(--na); }
+  .tag { display:inline-block; padding:1px 9px; border-radius:99px; font-size:13px;
+         border:1px solid currentColor; white-space:nowrap; }
+  .tag.verified { color:var(--ok); } .tag.failing { color:var(--bad); } .tag.unknown { color:var(--na); }
+  .ver { max-width:210px; }
+  summary { cursor:pointer; }
+  pre { background:var(--code); padding:10px 12px; border-radius:6px; overflow-x:auto;
+        font:13px/1.45 ui-monospace,Menlo,Consolas,monospace; margin:0 0 8px; white-space:pre-wrap;
+        word-break:break-word; }
+  code { background:var(--code); padding:1px 5px; border-radius:4px; font-size:13px; }
+  .fname { margin:10px 0 4px; font:13px ui-monospace,Menlo,monospace; color:var(--muted); }
+  .sr { position:absolute; left:-9999px; }
+  a { color:inherit; }
+  footer { margin-top:28px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Strue</h1>
+  <p class="lede">Developer setup recipes, run from an empty folder on Linux, macOS and Windows
+  every day. Each result is signed by the machine that produced it.</p>
+  <div class="stats">
+    <span><strong>0 verified, 0 failing, 11 not yet inspected</strong></span>
+    <span class="muted">No inspection has run yet.</span>
+    <span class="muted"><a href="api/latest.json">JSON</a> ·
+      <a href="https://github.com/OWNER/strue">Source and full history</a></span>
+  </div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Recipe</th><th>Status</th><th class="os">Linux</th><th class="os">macOS</th>
+      <th class="os">Windows</th><th>Versions that ran</th><th class="num">Streak, days</th></tr></thead>
+    <tbody>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>ESLint flat config that lints JavaScript with the recommended rules</strong><br><span class="muted">eslint-flat-config</span></summary>
+      <p>Set up ESLint for a JavaScript project and confirm it reports an unused variable. <a href="https://eslint.org/docs/latest/use/getting-started">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/eslint-flat-config.yaml">recipe file</a></p>
+      
+      
+      <h4>Steps, run from an empty folder</h4><pre>npm init -y
+npm install --save-dev eslint @eslint/js
+npx eslint good.js</pre>
+      <p class="fname">eslint.config.mjs</p><pre>import js from &quot;@eslint/js&quot;;
+import { defineConfig } from &quot;eslint/config&quot;;
+
+export default defineConfig([
+  { files: [&quot;**/*.js&quot;], plugins: { js }, extends: [&quot;js/recommended&quot;] },
+]);</pre><p class="fname">good.js</p><pre>export const answer = 42;</pre><p class="fname">bad.js</p><pre>const unused = 1;
+export const answer = 42;</pre>
+      <h4>Check</h4><pre>(npx eslint bad.js &gt; lint.txt || true) &amp;&amp; grep -q &quot;no-unused-vars&quot; lint.txt &amp;&amp; echo strue-ok</pre>
+      <h4>Outdated commands to avoid</h4><ul><li><code>npx eslint -c .eslintrc.json good.js</code> — ESLint no longer reads .eslintrc files; configuration must be an eslint.config.js flat config. <span class="tag na">not confirmed</span></li></ul>
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/eslint-flat-config.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>Express 5 server with a JSON route and a wildcard route</strong><br><span class="muted">express5-hello</span></summary>
+      <p>Create an Express server with a JSON endpoint and a catch-all path segment. <a href="https://expressjs.com/en/guide/migrating-5.html">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/express5-hello.yaml">recipe file</a></p>
+      
+      
+      <h4>Steps, run from an empty folder</h4><pre>npm init -y
+npm install express</pre>
+      <p class="fname">app.mjs</p><pre>import express from &quot;express&quot;;
+
+const app = express();
+app.get(&quot;/&quot;, (req, res) =&gt; res.json({ message: &quot;Hello World&quot; }));
+app.get(&quot;/files/*splat&quot;, (req, res) =&gt; res.json({ path: req.params.splat }));
+
+const server = app.listen(0, async () =&gt; {
+  const { port } = server.address();
+  const root = await (await fetch(`http://127.0.0.1:${port}/`)).json();
+  const file = await (await fetch(`http://127.0.0.1:${port}/files/a/b.txt`)).json();
+  server.close();
+  if (root.message !== &quot;Hello World&quot;) throw new Error(&quot;root route failed&quot;);
+  if (file.path.join(&quot;/&quot;) !== &quot;a/b.txt&quot;) throw new Error(&quot;wildcard route failed&quot;);
+  console.log(&quot;strue-ok&quot;);
+});</pre>
+      <h4>Check</h4><pre>node app.mjs</pre>
+      <h4>Outdated commands to avoid</h4><ul><li><code>node stale.mjs</code> — Express 5 rejects a bare &quot;*&quot; path; wildcards need a name, such as &quot;/*splat&quot;. <span class="tag na">not confirmed</span></li></ul>
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/express5-hello.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>FastAPI hello-world app that answers a request</strong><br><span class="muted">fastapi-hello</span></summary>
+      <p>Create a minimal FastAPI app and confirm it returns JSON. <a href="https://fastapi.tiangolo.com/tutorial/first-steps/">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/fastapi-hello.yaml">recipe file</a></p>
+      
+      
+      <h4>Steps, run from an empty folder</h4><pre>pip install &quot;fastapi[standard]&quot;</pre>
+      <p class="fname">main.py</p><pre>from fastapi import FastAPI
+
+app = FastAPI()
+
+
+@app.get(&quot;/&quot;)
+def root():
+    return {&quot;message&quot;: &quot;Hello World&quot;}</pre><p class="fname">check.py</p><pre>from fastapi.testclient import TestClient
+
+from main import app
+
+response = TestClient(app).get(&quot;/&quot;)
+assert response.status_code == 200, response.status_code
+assert response.json() == {&quot;message&quot;: &quot;Hello World&quot;}, response.text
+print(&quot;strue-ok&quot;)</pre>
+      <h4>Check</h4><pre>python check.py</pre>
+      
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/fastapi-hello.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>LangChain prompt-to-parser chain with current import paths</strong><br><span class="muted">langchain-core-chain</span></summary>
+      <p>Build a LangChain runnable chain from a chat prompt using langchain-core imports. <a href="https://python.langchain.com/docs/concepts/lcel/">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/langchain-core-chain.yaml">recipe file</a></p>
+      <p class="muted">A stand-in function plays the model, so no API key is needed. The check proves the import paths and the pipe composition still work.</p>
+      
+      <h4>Steps, run from an empty folder</h4><pre>pip install langchain langchain-core</pre>
+      <p class="fname">check.py</p><pre>from langchain_core.messages import AIMessage
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnableLambda
+
+prompt = ChatPromptTemplate.from_messages(
+    [(&quot;system&quot;, &quot;You are terse.&quot;), (&quot;human&quot;, &quot;{question}&quot;)]
+)
+fake_model = RunnableLambda(
+    lambda value: AIMessage(content=&quot;echo:&quot; + value.to_messages()[-1].content)
+)
+chain = prompt | fake_model | StrOutputParser()
+assert chain.invoke({&quot;question&quot;: &quot;hi&quot;}) == &quot;echo:hi&quot;
+print(&quot;strue-ok&quot;)</pre>
+      <h4>Check</h4><pre>python check.py</pre>
+      <h4>Outdated commands to avoid</h4><ul><li><code>python -c &quot;from langchain.chains import LLMChain&quot;</code> — langchain.chains and LLMChain are no longer in the langchain package; compose runnables from langchain_core instead. <span class="tag na">not confirmed</span></li></ul>
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/langchain-core-chain.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>MCP server in Python with one tool, called by an in-process client</strong><br><span class="muted">mcp-python-server</span></summary>
+      <p>Write an MCP server with the official Python SDK and call its tool. <a href="https://github.com/modelcontextprotocol/python-sdk">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/mcp-python-server.yaml">recipe file</a></p>
+      
+      
+      <h4>Steps, run from an empty folder</h4><pre>pip install mcp</pre>
+      <p class="fname">check.py</p><pre>import anyio
+from mcp import Client
+from mcp.server.mcpserver import MCPServer
+
+server = MCPServer(&quot;demo&quot;)
+
+
+@server.tool()
+def add(a: int, b: int) -&gt; int:
+    &quot;&quot;&quot;Add two numbers.&quot;&quot;&quot;
+    return a + b
+
+
+async def main() -&gt; None:
+    async with Client(server) as client:
+        tools = await client.list_tools()
+        assert [tool.name for tool in tools.tools] == [&quot;add&quot;]
+        result = await client.call_tool(&quot;add&quot;, {&quot;a&quot;: 2, &quot;b&quot;: 3})
+        assert result.content[0].text == &quot;5&quot;, result
+    print(&quot;strue-ok&quot;)
+
+
+anyio.run(main)</pre>
+      <h4>Check</h4><pre>python check.py</pre>
+      <h4>Outdated commands to avoid</h4><ul><li><code>python -c &quot;from mcp.server.fastmcp import FastMCP&quot;</code> — In mcp 2.x FastMCP was renamed; import MCPServer from mcp.server.mcpserver. <span class="tag na">not confirmed</span></li></ul>
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/mcp-python-server.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>Next.js app created with create-next-app and built for production</strong><br><span class="muted">nextjs-app-build</span></summary>
+      <p>Create a new Next.js app with the default template and run a production build. <a href="https://nextjs.org/docs/app/getting-started/installation">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/nextjs-app-build.yaml">recipe file</a></p>
+      <p class="muted">The default template downloads Google Fonts during the build, so this needs open internet access.</p>
+      
+      <h4>Steps, run from an empty folder</h4><pre>npx create-next-app@latest app --yes --use-npm
+(in app/) npm run build</pre>
+      
+      <h4>Check</h4><pre>test -d .next &amp;&amp; echo strue-ok</pre>
+      
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/nextjs-app-build.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>OpenAI Python SDK client object and its request surfaces</strong><br><span class="muted">openai-python-client</span></summary>
+      <p>Install the OpenAI Python SDK and construct a client the current way. <a href="https://github.com/openai/openai-python">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/openai-python-client.yaml">recipe file</a></p>
+      <p class="muted">No network call is made and no real key is needed. The check proves the import path, the client constructor and the presence of the request surfaces.</p>
+      
+      <h4>Steps, run from an empty folder</h4><pre>pip install openai</pre>
+      <p class="fname">check.py</p><pre>from openai import OpenAI
+
+client = OpenAI(api_key=&quot;sk-not-a-real-key&quot;)
+assert callable(client.responses.create)
+assert callable(client.chat.completions.create)
+assert callable(client.embeddings.create)
+print(&quot;strue-ok&quot;)</pre>
+      <h4>Check</h4><pre>python check.py</pre>
+      <h4>Outdated commands to avoid</h4><ul><li><code>python stale.py</code> — The module-level openai.ChatCompletion API was removed in openai 1.0; use a client object. <span class="tag na">not confirmed</span></li></ul>
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/openai-python-client.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>Pydantic v2 model with validation and JSON round trip</strong><br><span class="muted">pydantic-v2-model</span></summary>
+      <p>Define a Pydantic model, validate input, and serialise it with the v2 API. <a href="https://docs.pydantic.dev/latest/concepts/models/">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/pydantic-v2-model.yaml">recipe file</a></p>
+      
+      
+      <h4>Steps, run from an empty folder</h4><pre>pip install pydantic</pre>
+      <p class="fname">check.py</p><pre>from pydantic import BaseModel, ValidationError, field_validator
+
+
+class User(BaseModel):
+    id: int
+    name: str
+
+    @field_validator(&quot;name&quot;)
+    @classmethod
+    def name_not_blank(cls, value: str) -&gt; str:
+        if not value.strip():
+            raise ValueError(&quot;name must not be blank&quot;)
+        return value
+
+
+user = User.model_validate({&quot;id&quot;: &quot;7&quot;, &quot;name&quot;: &quot;Asha&quot;})
+assert user.id == 7
+assert user.model_dump() == {&quot;id&quot;: 7, &quot;name&quot;: &quot;Asha&quot;}
+assert User.model_validate_json(user.model_dump_json()) == user
+try:
+    User.model_validate({&quot;id&quot;: 1, &quot;name&quot;: &quot; &quot;})
+except ValidationError:
+    print(&quot;strue-ok&quot;)</pre>
+      <h4>Check</h4><pre>python check.py</pre>
+      
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/pydantic-v2-model.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>Tailwind CSS v4 stylesheet built with the standalone CLI package</strong><br><span class="muted">tailwind4-cli-build</span></summary>
+      <p>Install Tailwind CSS and compile a stylesheet that contains the classes used in an HTML file. <a href="https://tailwindcss.com/docs/installation/tailwind-cli">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/tailwind4-cli-build.yaml">recipe file</a></p>
+      
+      
+      <h4>Steps, run from an empty folder</h4><pre>npm init -y
+npm install tailwindcss @tailwindcss/cli
+npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css</pre>
+      <p class="fname">src/input.css</p><pre>@import &quot;tailwindcss&quot;;</pre><p class="fname">index.html</p><pre>&lt;!doctype html&gt;
+&lt;html&gt;
+  &lt;body&gt;
+    &lt;h1 class=&quot;text-3xl font-bold underline&quot;&gt;Hello&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+      <h4>Check</h4><pre>grep -q &quot;text-3xl&quot; dist/output.css &amp;&amp; grep -q &quot;underline&quot; dist/output.css &amp;&amp; echo strue-ok</pre>
+      <h4>Outdated commands to avoid</h4><ul><li><code>npx tailwindcss init -p &amp;&amp; test -f tailwind.config.js</code> — Tailwind v4 has no init command and no generated tailwind.config.js; configuration lives in CSS. <span class="tag na">not confirmed</span></li></ul>
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/tailwind4-cli-build.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>New Python project with uv, one dependency, and a run</strong><br><span class="muted">uv-new-project</span></summary>
+      <p>Start a Python project with uv, add a dependency and run code inside it. <a href="https://docs.astral.sh/uv/guides/projects/">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/uv-new-project.yaml">recipe file</a></p>
+      
+      
+      <h4>Steps, run from an empty folder</h4><pre>pip install uv
+uv init demo
+(in demo/) uv add httpx</pre>
+      
+      <h4>Check</h4><pre>uv run python -c &quot;import httpx; print(&#x27;strue-ok&#x27;, httpx.__version__)&quot;</pre>
+      
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/uv-new-project.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr>
+<tr class="unknown">
+  <td class="what">
+    <details>
+      <summary><strong>Vite React + TypeScript app scaffolded and built</strong><br><span class="muted">vite-react-ts-build</span></summary>
+      <p>Scaffold a React TypeScript app with Vite and produce a production build. <a href="https://vite.dev/guide/">Official docs</a> ·
+         <a href="https://github.com/OWNER/strue/blob/main/recipes/vite-react-ts-build.yaml">recipe file</a></p>
+      
+      
+      <h4>Steps, run from an empty folder</h4><pre>npm create vite@latest app -- --template react-ts
+(in app/) npm install
+(in app/) npm run build</pre>
+      
+      <h4>Check</h4><pre>test -f dist/index.html &amp;&amp; echo strue-ok</pre>
+      
+      
+      <h4>Badge</h4><pre>[![strue](https://OWNER.github.io/strue/badges/vite-react-ts-build.svg)](https://OWNER.github.io/strue/)</pre>
+    </details>
+  </td>
+  <td><span class="tag unknown">unknown</span></td>
+  <td class="os na" title="not run">–</td><td class="os na" title="not run">–</td><td class="os na" title="not run">–</td>
+  <td class="muted ver">–</td>
+  <td class="num">0</td>
+</tr></tbody>
+  </table>
+  </div>
+  <footer class="muted">
+    <p>A tick links to the run that produced it. Nobody can pay for a pass: a recipe is verified
+    only when its check exits cleanly on every listed system.</p>
+  </footer>
+</main>
+</body>
+</html>

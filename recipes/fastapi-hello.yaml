@@ -1,0 +1,31 @@
+id: fastapi-hello
+title: FastAPI hello-world app that answers a request
+intent: Create a minimal FastAPI app and confirm it returns JSON.
+source: https://fastapi.tiangolo.com/tutorial/first-steps/
+runtime: python
+tags: [python, fastapi, web, api]
+files:
+  main.py: |
+    from fastapi import FastAPI
+
+    app = FastAPI()
+
+
+    @app.get("/")
+    def root():
+        return {"message": "Hello World"}
+  check.py: |
+    from fastapi.testclient import TestClient
+
+    from main import app
+
+    response = TestClient(app).get("/")
+    assert response.status_code == 200, response.status_code
+    assert response.json() == {"message": "Hello World"}, response.text
+    print("strue-ok")
+steps:
+  - pip install "fastapi[standard]"
+check:
+  run: python check.py
+  expect: strue-ok
+track: [fastapi, starlette, pydantic]
