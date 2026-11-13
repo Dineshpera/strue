@@ -27,33 +27,48 @@
   },
   "avoid": [],
   "os": {
-    "ubuntu-latest": {
+    "macos-latest": {
       "status": "pass",
       "versions": {
-        "fastapi": "0.162.6",
+        "fastapi": "0.162.7",
         "starlette": "1.10.0",
         "pydantic": "2.14.3"
       },
-      "duration_s": 12.0,
+      "duration_s": 18.1,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
-      "finished_at": "2026-11-13T17:07:52Z",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43478978207",
+      "finished_at": "2026-11-13T18:07:29Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/macos-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/macos-latest.json --repo Dineshpera/strue"
+    },
+    "ubuntu-latest": {
+      "status": "pass",
+      "versions": {
+        "fastapi": "0.162.7",
+        "starlette": "1.10.0",
+        "pydantic": "2.14.3"
+      },
+      "duration_s": 32.1,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43478978207",
+      "finished_at": "2026-11-13T18:06:35Z",
       "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/ubuntu-latest.json",
       "verify": "gh attestation verify results/2026-11-13/ubuntu-latest.json --repo Dineshpera/strue"
     },
     "windows-latest": {
       "status": "pass",
       "versions": {
-        "fastapi": "0.162.6",
+        "fastapi": "0.162.7",
         "starlette": "1.10.0",
         "pydantic": "2.14.3"
       },
-      "duration_s": 28.3,
+      "duration_s": 29.8,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
-      "finished_at": "2026-11-13T17:11:47Z",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43478978207",
+      "finished_at": "2026-11-13T18:11:12Z",
       "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/windows-latest.json",
       "verify": "gh attestation verify results/2026-11-13/windows-latest.json --repo Dineshpera/strue"
     }
