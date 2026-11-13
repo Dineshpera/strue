@@ -11,9 +11,9 @@
     "api"
   ],
   "notes": "",
-  "status": "unknown",
-  "inspected_on": null,
-  "verified_streak_days": 0,
+  "status": "verified",
+  "inspected_on": "2026-11-13",
+  "verified_streak_days": 1,
   "files": {
     "main.py": "from fastapi import FastAPI\n\napp = FastAPI()\n\n\n@app.get(\"/\")\ndef root():\n    return {\"message\": \"Hello World\"}\n",
     "check.py": "from fastapi.testclient import TestClient\n\nfrom main import app\n\nresponse = TestClient(app).get(\"/\")\nassert response.status_code == 200, response.status_code\nassert response.json() == {\"message\": \"Hello World\"}, response.text\nprint(\"strue-ok\")\n"
@@ -26,7 +26,43 @@
     "expect": "strue-ok"
   },
   "avoid": [],
-  "os": {},
-  "history": [],
-  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/fastapi-hello.yaml"
+  "os": {
+    "ubuntu-latest": {
+      "status": "pass",
+      "versions": {
+        "fastapi": "0.162.6",
+        "starlette": "1.10.0",
+        "pydantic": "2.14.3"
+      },
+      "duration_s": 12.0,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
+      "finished_at": "2026-11-13T17:07:52Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/ubuntu-latest.json --repo Dineshpera/strue"
+    },
+    "windows-latest": {
+      "status": "pass",
+      "versions": {
+        "fastapi": "0.162.6",
+        "starlette": "1.10.0",
+        "pydantic": "2.14.3"
+      },
+      "duration_s": 28.3,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
+      "finished_at": "2026-11-13T17:11:47Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/windows-latest.json --repo Dineshpera/strue"
+    }
+  },
+  "history": [
+    {
+      "date": "2026-11-13",
+      "status": "verified"
+    }
+  ],
+  "recipe_file": "https://github.com/Dineshpera/strue/blob/main/recipes/fastapi-hello.yaml"
 }

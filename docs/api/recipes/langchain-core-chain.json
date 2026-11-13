@@ -10,9 +10,9 @@
     "llm"
   ],
   "notes": "A stand-in function plays the model, so no API key is needed. The check proves the import paths and the pipe composition still work.",
-  "status": "unknown",
-  "inspected_on": null,
-  "verified_streak_days": 0,
+  "status": "verified",
+  "inspected_on": "2026-11-13",
+  "verified_streak_days": 1,
   "files": {
     "check.py": "from langchain_core.messages import AIMessage\nfrom langchain_core.output_parsers import StrOutputParser\nfrom langchain_core.prompts import ChatPromptTemplate\nfrom langchain_core.runnables import RunnableLambda\n\nprompt = ChatPromptTemplate.from_messages(\n    [(\"system\", \"You are terse.\"), (\"human\", \"{question}\")]\n)\nfake_model = RunnableLambda(\n    lambda value: AIMessage(content=\"echo:\" + value.to_messages()[-1].content)\n)\nchain = prompt | fake_model | StrOutputParser()\nassert chain.invoke({\"question\": \"hi\"}) == \"echo:hi\"\nprint(\"strue-ok\")\n"
   },
@@ -27,10 +27,44 @@
     {
       "run": "python -c \"from langchain.chains import LLMChain\"",
       "why": "langchain.chains and LLMChain are no longer in the langchain package; compose runnables from langchain_core instead.",
-      "still_fails": null
+      "still_fails": true
     }
   ],
-  "os": {},
-  "history": [],
-  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/langchain-core-chain.yaml"
+  "os": {
+    "ubuntu-latest": {
+      "status": "pass",
+      "versions": {
+        "langchain": "1.5.0",
+        "langchain-core": "1.8.0"
+      },
+      "duration_s": 9.8,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
+      "finished_at": "2026-11-13T17:07:52Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/ubuntu-latest.json --repo Dineshpera/strue"
+    },
+    "windows-latest": {
+      "status": "pass",
+      "versions": {
+        "langchain": "1.5.0",
+        "langchain-core": "1.8.0"
+      },
+      "duration_s": 17.1,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
+      "finished_at": "2026-11-13T17:11:47Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/windows-latest.json --repo Dineshpera/strue"
+    }
+  },
+  "history": [
+    {
+      "date": "2026-11-13",
+      "status": "verified"
+    }
+  ],
+  "recipe_file": "https://github.com/Dineshpera/strue/blob/main/recipes/langchain-core-chain.yaml"
 }

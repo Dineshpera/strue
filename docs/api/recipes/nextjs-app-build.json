@@ -11,9 +11,9 @@
     "frontend"
   ],
   "notes": "The default template downloads Google Fonts during the build, so this needs open internet access.",
-  "status": "unknown",
-  "inspected_on": null,
-  "verified_streak_days": 0,
+  "status": "verified",
+  "inspected_on": "2026-11-13",
+  "verified_streak_days": 1,
   "files": {},
   "steps": [
     "npx create-next-app@latest app --yes --use-npm",
@@ -28,7 +28,41 @@
     "expect": "strue-ok"
   },
   "avoid": [],
-  "os": {},
-  "history": [],
-  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/nextjs-app-build.yaml"
+  "os": {
+    "ubuntu-latest": {
+      "status": "pass",
+      "versions": {
+        "next": "16.4.6",
+        "react": "19.3.0"
+      },
+      "duration_s": 31.6,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
+      "finished_at": "2026-11-13T17:07:52Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/ubuntu-latest.json --repo Dineshpera/strue"
+    },
+    "windows-latest": {
+      "status": "pass",
+      "versions": {
+        "next": "16.4.6",
+        "react": "19.3.0"
+      },
+      "duration_s": 171.7,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
+      "finished_at": "2026-11-13T17:11:47Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/windows-latest.json --repo Dineshpera/strue"
+    }
+  },
+  "history": [
+    {
+      "date": "2026-11-13",
+      "status": "verified"
+    }
+  ],
+  "recipe_file": "https://github.com/Dineshpera/strue/blob/main/recipes/nextjs-app-build.yaml"
 }

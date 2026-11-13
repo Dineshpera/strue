@@ -11,9 +11,9 @@
     "frontend"
   ],
   "notes": "",
-  "status": "unknown",
-  "inspected_on": null,
-  "verified_streak_days": 0,
+  "status": "verified",
+  "inspected_on": "2026-11-13",
+  "verified_streak_days": 1,
   "files": {
     "src/input.css": "@import \"tailwindcss\";\n",
     "index.html": "<!doctype html>\n<html>\n  <body>\n    <h1 class=\"text-3xl font-bold underline\">Hello</h1>\n  </body>\n</html>\n"
@@ -31,10 +31,44 @@
     {
       "run": "npx tailwindcss init -p && test -f tailwind.config.js",
       "why": "Tailwind v4 has no init command and no generated tailwind.config.js; configuration lives in CSS.",
-      "still_fails": null
+      "still_fails": true
     }
   ],
-  "os": {},
-  "history": [],
-  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/tailwind4-cli-build.yaml"
+  "os": {
+    "ubuntu-latest": {
+      "status": "pass",
+      "versions": {
+        "tailwindcss": "4.3.5",
+        "@tailwindcss/cli": "4.3.5"
+      },
+      "duration_s": 3.2,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
+      "finished_at": "2026-11-13T17:07:52Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/ubuntu-latest.json --repo Dineshpera/strue"
+    },
+    "windows-latest": {
+      "status": "pass",
+      "versions": {
+        "tailwindcss": "4.3.5",
+        "@tailwindcss/cli": "4.3.5"
+      },
+      "duration_s": 10.6,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
+      "finished_at": "2026-11-13T17:11:47Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/windows-latest.json --repo Dineshpera/strue"
+    }
+  },
+  "history": [
+    {
+      "date": "2026-11-13",
+      "status": "verified"
+    }
+  ],
+  "recipe_file": "https://github.com/Dineshpera/strue/blob/main/recipes/tailwind4-cli-build.yaml"
 }

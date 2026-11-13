@@ -10,9 +10,9 @@
     "validation"
   ],
   "notes": "",
-  "status": "unknown",
-  "inspected_on": null,
-  "verified_streak_days": 0,
+  "status": "verified",
+  "inspected_on": "2026-11-13",
+  "verified_streak_days": 1,
   "files": {
     "check.py": "from pydantic import BaseModel, ValidationError, field_validator\n\n\nclass User(BaseModel):\n    id: int\n    name: str\n\n    @field_validator(\"name\")\n    @classmethod\n    def name_not_blank(cls, value: str) -> str:\n        if not value.strip():\n            raise ValueError(\"name must not be blank\")\n        return value\n\n\nuser = User.model_validate({\"id\": \"7\", \"name\": \"Asha\"})\nassert user.id == 7\nassert user.model_dump() == {\"id\": 7, \"name\": \"Asha\"}\nassert User.model_validate_json(user.model_dump_json()) == user\ntry:\n    User.model_validate({\"id\": 1, \"name\": \" \"})\nexcept ValidationError:\n    print(\"strue-ok\")\n"
   },
@@ -24,7 +24,41 @@
     "expect": "strue-ok"
   },
   "avoid": [],
-  "os": {},
-  "history": [],
-  "recipe_file": "https://github.com/OWNER/strue/blob/main/recipes/pydantic-v2-model.yaml"
+  "os": {
+    "ubuntu-latest": {
+      "status": "pass",
+      "versions": {
+        "pydantic": "2.14.3",
+        "pydantic-core": "2.50.4"
+      },
+      "duration_s": 4.4,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
+      "finished_at": "2026-11-13T17:07:52Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/ubuntu-latest.json --repo Dineshpera/strue"
+    },
+    "windows-latest": {
+      "status": "pass",
+      "versions": {
+        "pydantic": "2.14.3",
+        "pydantic-core": "2.50.4"
+      },
+      "duration_s": 5.3,
+      "failed_step": null,
+      "log_tail": "",
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/43469380757",
+      "finished_at": "2026-11-13T17:11:47Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-13/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-13/windows-latest.json --repo Dineshpera/strue"
+    }
+  },
+  "history": [
+    {
+      "date": "2026-11-13",
+      "status": "verified"
+    }
+  ],
+  "recipe_file": "https://github.com/Dineshpera/strue/blob/main/recipes/pydantic-v2-model.yaml"
 }
