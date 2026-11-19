@@ -11,8 +11,8 @@
   ],
   "notes": "",
   "status": "verified",
-  "inspected_on": "2026-11-18",
-  "verified_streak_days": 6,
+  "inspected_on": "2026-11-19",
+  "verified_streak_days": 7,
   "files": {
     "check.py": "from pydantic import BaseModel, ValidationError, field_validator\n\n\nclass User(BaseModel):\n    id: int\n    name: str\n\n    @field_validator(\"name\")\n    @classmethod\n    def name_not_blank(cls, value: str) -> str:\n        if not value.strip():\n            raise ValueError(\"name must not be blank\")\n        return value\n\n\nuser = User.model_validate({\"id\": \"7\", \"name\": \"Asha\"})\nassert user.id == 7\nassert user.model_dump() == {\"id\": 7, \"name\": \"Asha\"}\nassert User.model_validate_json(user.model_dump_json()) == user\ntry:\n    User.model_validate({\"id\": 1, \"name\": \" \"})\nexcept ValidationError:\n    print(\"strue-ok\")\n"
   },
@@ -31,13 +31,13 @@
         "pydantic": "2.14.3",
         "pydantic-core": "2.50.4"
       },
-      "duration_s": 3.2,
+      "duration_s": 5.4,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/44282113365",
-      "finished_at": "2026-11-18T10:07:30Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-18/macos-latest.json",
-      "verify": "gh attestation verify results/2026-11-18/macos-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/44504096040",
+      "finished_at": "2026-11-19T10:19:03Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-19/macos-latest.json",
+      "verify": "gh attestation verify results/2026-11-19/macos-latest.json --repo Dineshpera/strue"
     },
     "ubuntu-latest": {
       "status": "pass",
@@ -45,13 +45,13 @@
         "pydantic": "2.14.3",
         "pydantic-core": "2.50.4"
       },
-      "duration_s": 2.9,
+      "duration_s": 4.4,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/44282113365",
-      "finished_at": "2026-11-18T10:07:13Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-18/ubuntu-latest.json",
-      "verify": "gh attestation verify results/2026-11-18/ubuntu-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/44504096040",
+      "finished_at": "2026-11-19T10:18:06Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-19/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-19/ubuntu-latest.json --repo Dineshpera/strue"
     },
     "windows-latest": {
       "status": "pass",
@@ -59,13 +59,13 @@
         "pydantic": "2.14.3",
         "pydantic-core": "2.50.4"
       },
-      "duration_s": 5.2,
+      "duration_s": 7.0,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/44282113365",
-      "finished_at": "2026-11-18T10:11:48Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-18/windows-latest.json",
-      "verify": "gh attestation verify results/2026-11-18/windows-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/44504096040",
+      "finished_at": "2026-11-19T10:23:09Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-19/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-19/windows-latest.json --repo Dineshpera/strue"
     }
   },
   "history": [
@@ -91,6 +91,10 @@
     },
     {
       "date": "2026-11-18",
+      "status": "verified"
+    },
+    {
+      "date": "2026-11-19",
       "status": "verified"
     }
   ],
