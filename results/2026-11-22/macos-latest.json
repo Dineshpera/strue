@@ -1,0 +1,187 @@
+{
+  "schema": "strue.result/v1",
+  "os": "macos-latest",
+  "finished_at": "2026-11-22T09:46:08Z",
+  "run_url": "https://github.com/Dineshpera/strue/actions/runs/45008969490",
+  "commit": "5936632467b95300c1e72e33477f3aab2753c8ee",
+  "machine": {
+    "platform": "macOS-26.7.2-arm64-arm-64bit-Mach-O",
+    "python": "3.13.17",
+    "node": "v22.23.5",
+    "npm": "10.9.9"
+  },
+  "results": [
+    {
+      "id": "eslint-flat-config",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "eslint": "10.15.0",
+        "@eslint/js": "10.0.1"
+      },
+      "avoid": [
+        {
+          "run": "npx eslint -c .eslintrc.json good.js",
+          "why": "ESLint no longer reads .eslintrc files; configuration must be an eslint.config.js flat config.",
+          "still_fails": true,
+          "evidence": "er:831:12)\n    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:609:31)\n    at #createModuleJob (node:internal/modules/esm/loader:640:36)\n    at #getJobFromResolveResult (node:internal/modules/esm/loader:353:34)\n    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:321:41)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:680:25)"
+        }
+      ],
+      "duration_s": 5.0
+    },
+    {
+      "id": "express5-hello",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "express": "5.3.0"
+      },
+      "avoid": [
+        {
+          "run": "node stale.mjs",
+          "why": "Express 5 rejects a bare \"*\" path; wildcards need a name, such as \"/*splat\".",
+          "still_fails": true,
+          "evidence": "e_modules/router/index.js:442:17)\n    at Function.route (/private/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/strue-express5-hello-4rfyfuxi/node_modules/express/lib/application.js:257:22)\n    at app.<computed> [as get] (/private/var/folders/q2/p1t6rgxj5fj32g1dc7dmd49r0000gn/T/strue-express5-hello-4rfyfuxi/node_modules/express/lib/application.js:478:22) {\n  originalPath: '*'\n}\n\nNode.js v22.23.5"
+        }
+      ],
+      "duration_s": 2.6
+    },
+    {
+      "id": "fastapi-hello",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "fastapi": "0.165.0",
+        "starlette": "1.10.0",
+        "pydantic": "2.14.4"
+      },
+      "avoid": [],
+      "duration_s": 10.6
+    },
+    {
+      "id": "langchain-core-chain",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "langchain": "1.5.2",
+        "langchain-core": "1.8.4"
+      },
+      "avoid": [
+        {
+          "run": "python -c \"from langchain.chains import LLMChain\"",
+          "why": "langchain.chains and LLMChain are no longer in the langchain package; compose runnables from langchain_core instead.",
+          "still_fails": true,
+          "evidence": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    from langchain.chains import LLMChain\nModuleNotFoundError: No module named 'langchain.chains'"
+        }
+      ],
+      "duration_s": 6.9
+    },
+    {
+      "id": "mcp-python-server",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "mcp": "2.3.0"
+      },
+      "avoid": [
+        {
+          "run": "python -c \"from mcp.server.fastmcp import FastMCP\"",
+          "why": "In mcp 2.x FastMCP was renamed; import MCPServer from mcp.server.mcpserver.",
+          "still_fails": true,
+          "evidence": " in <module>\n    raise ModuleNotFoundError(_MESSAGE, name=__name__)\nModuleNotFoundError: No module named 'mcp.server.fastmcp'. This is mcp 2.x, where FastMCP was renamed to MCPServer (from mcp.server.mcpserver import MCPServer) and other APIs changed; see the migration guide at https://py.sdk.modelcontextprotocol.io/v2/migration/#fastmcp-renamed-to-mcpserver or pin 'mcp<2' to keep running v1 code."
+        }
+      ],
+      "duration_s": 6.0
+    },
+    {
+      "id": "nextjs-app-build",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "next": "16.4.6",
+        "react": "19.3.0"
+      },
+      "avoid": [],
+      "duration_s": 41.1
+    },
+    {
+      "id": "openai-python-client",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "openai": "3.57.0"
+      },
+      "avoid": [
+        {
+          "run": "python stale.py",
+          "why": "The module-level openai.ChatCompletion API was removed in openai 1.0; use a client object.",
+          "still_fails": true,
+          "evidence": "r supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742"
+        }
+      ],
+      "duration_s": 10.3
+    },
+    {
+      "id": "pydantic-v2-model",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "pydantic": "2.14.4",
+        "pydantic-core": "2.50.5"
+      },
+      "avoid": [],
+      "duration_s": 4.4
+    },
+    {
+      "id": "tailwind4-cli-build",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "tailwindcss": "4.3.5",
+        "@tailwindcss/cli": "4.3.5"
+      },
+      "avoid": [
+        {
+          "run": "npx tailwindcss init -p && test -f tailwind.config.js",
+          "why": "Tailwind v4 has no init command and no generated tailwind.config.js; configuration lives in CSS.",
+          "still_fails": true,
+          "evidence": "]\n  -m, --minify ················ Optimize and minify the output\n      --optimize ·············· Optimize the output without minifying\n      --cwd ··················· The current working directory [default: `.`]\n      --map ··················· Generate a source map [default: `false`]\n      --silent ················ Suppress non-error output\n  -h, --help ·················· Display usage information"
+        }
+      ],
+      "duration_s": 4.5
+    },
+    {
+      "id": "uv-new-project",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "uv": "0.13.9"
+      },
+      "avoid": [],
+      "duration_s": 5.2
+    },
+    {
+      "id": "vite-react-ts-build",
+      "status": "pass",
+      "failed_step": null,
+      "log_tail": "",
+      "versions": {
+        "vite": "8.3.8",
+        "react": "19.3.1",
+        "typescript": "7.0.2"
+      },
+      "avoid": [],
+      "duration_s": 18.2
+    }
+  ]
+}
