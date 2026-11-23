@@ -11,8 +11,8 @@
   ],
   "notes": "",
   "status": "verified",
-  "inspected_on": "2026-11-22",
-  "verified_streak_days": 10,
+  "inspected_on": "2026-11-23",
+  "verified_streak_days": 11,
   "files": {},
   "steps": [
     "pip install uv",
@@ -34,39 +34,39 @@
       "versions": {
         "uv": "0.13.9"
       },
-      "duration_s": 5.2,
+      "duration_s": 4.4,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45008969490",
-      "finished_at": "2026-11-22T09:46:08Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-22/macos-latest.json",
-      "verify": "gh attestation verify results/2026-11-22/macos-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45158619502",
+      "finished_at": "2026-11-23T10:45:10Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-23/macos-latest.json",
+      "verify": "gh attestation verify results/2026-11-23/macos-latest.json --repo Dineshpera/strue"
     },
     "ubuntu-latest": {
       "status": "pass",
       "versions": {
         "uv": "0.13.9"
       },
-      "duration_s": 4.7,
+      "duration_s": 3.8,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45008969490",
-      "finished_at": "2026-11-22T09:45:52Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-22/ubuntu-latest.json",
-      "verify": "gh attestation verify results/2026-11-22/ubuntu-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45158619502",
+      "finished_at": "2026-11-23T10:44:27Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-23/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-23/ubuntu-latest.json --repo Dineshpera/strue"
     },
     "windows-latest": {
       "status": "pass",
       "versions": {
         "uv": "0.13.9"
       },
-      "duration_s": 8.2,
+      "duration_s": 7.4,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45008969490",
-      "finished_at": "2026-11-22T09:53:06Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-22/windows-latest.json",
-      "verify": "gh attestation verify results/2026-11-22/windows-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45158619502",
+      "finished_at": "2026-11-23T10:48:57Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-23/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-23/windows-latest.json --repo Dineshpera/strue"
     }
   },
   "history": [
@@ -108,6 +108,10 @@
     },
     {
       "date": "2026-11-22",
+      "status": "verified"
+    },
+    {
+      "date": "2026-11-23",
       "status": "verified"
     }
   ],
