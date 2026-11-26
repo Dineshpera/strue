@@ -12,8 +12,8 @@
   ],
   "notes": "The default template downloads Google Fonts during the build, so this needs open internet access.",
   "status": "verified",
-  "inspected_on": "2026-11-25",
-  "verified_streak_days": 13,
+  "inspected_on": "2026-11-26",
+  "verified_streak_days": 14,
   "files": {},
   "steps": [
     "npx create-next-app@latest app --yes --use-npm",
@@ -35,13 +35,13 @@
         "next": "16.4.6",
         "react": "19.3.0"
       },
-      "duration_s": 44.7,
+      "duration_s": 47.2,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45602520380",
-      "finished_at": "2026-11-25T11:16:45Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-25/macos-latest.json",
-      "verify": "gh attestation verify results/2026-11-25/macos-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45804960565",
+      "finished_at": "2026-11-26T10:52:39Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-26/macos-latest.json",
+      "verify": "gh attestation verify results/2026-11-26/macos-latest.json --repo Dineshpera/strue"
     },
     "ubuntu-latest": {
       "status": "pass",
@@ -49,13 +49,13 @@
         "next": "16.4.6",
         "react": "19.3.0"
       },
-      "duration_s": 21.0,
+      "duration_s": 23.6,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45602520380",
-      "finished_at": "2026-11-25T11:15:41Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-25/ubuntu-latest.json",
-      "verify": "gh attestation verify results/2026-11-25/ubuntu-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45804960565",
+      "finished_at": "2026-11-26T10:51:23Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-26/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-26/ubuntu-latest.json --repo Dineshpera/strue"
     },
     "windows-latest": {
       "status": "pass",
@@ -63,13 +63,13 @@
         "next": "16.4.6",
         "react": "19.3.0"
       },
-      "duration_s": 210.0,
+      "duration_s": 184.4,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45602520380",
-      "finished_at": "2026-11-25T11:21:06Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-25/windows-latest.json",
-      "verify": "gh attestation verify results/2026-11-25/windows-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45804960565",
+      "finished_at": "2026-11-26T10:56:26Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-26/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-26/windows-latest.json --repo Dineshpera/strue"
     }
   },
   "history": [
@@ -123,6 +123,10 @@
     },
     {
       "date": "2026-11-25",
+      "status": "verified"
+    },
+    {
+      "date": "2026-11-26",
       "status": "verified"
     }
   ],
