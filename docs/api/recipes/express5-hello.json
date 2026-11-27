@@ -12,8 +12,8 @@
   ],
   "notes": "",
   "status": "verified",
-  "inspected_on": "2026-11-26",
-  "verified_streak_days": 14,
+  "inspected_on": "2026-11-27",
+  "verified_streak_days": 15,
   "files": {
     "app.mjs": "import express from \"express\";\n\nconst app = express();\napp.get(\"/\", (req, res) => res.json({ message: \"Hello World\" }));\napp.get(\"/files/*splat\", (req, res) => res.json({ path: req.params.splat }));\n\nconst server = app.listen(0, async () => {\n  const { port } = server.address();\n  const root = await (await fetch(`http://127.0.0.1:${port}/`)).json();\n  const file = await (await fetch(`http://127.0.0.1:${port}/files/a/b.txt`)).json();\n  server.close();\n  if (root.message !== \"Hello World\") throw new Error(\"root route failed\");\n  if (file.path.join(\"/\") !== \"a/b.txt\") throw new Error(\"wildcard route failed\");\n  console.log(\"strue-ok\");\n});\n",
     "stale.mjs": "import express from \"express\";\n\nconst app = express();\napp.get(\"*\", (req, res) => res.send(\"catch-all\"));\n"
@@ -39,39 +39,39 @@
       "versions": {
         "express": "5.3.0"
       },
-      "duration_s": 3.4,
+      "duration_s": 4.1,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45804960565",
-      "finished_at": "2026-11-26T10:52:39Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-26/macos-latest.json",
-      "verify": "gh attestation verify results/2026-11-26/macos-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45985224436",
+      "finished_at": "2026-11-27T10:51:10Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-27/macos-latest.json",
+      "verify": "gh attestation verify results/2026-11-27/macos-latest.json --repo Dineshpera/strue"
     },
     "ubuntu-latest": {
       "status": "pass",
       "versions": {
         "express": "5.3.0"
       },
-      "duration_s": 1.9,
+      "duration_s": 2.0,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45804960565",
-      "finished_at": "2026-11-26T10:51:23Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-26/ubuntu-latest.json",
-      "verify": "gh attestation verify results/2026-11-26/ubuntu-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45985224436",
+      "finished_at": "2026-11-27T10:50:20Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-27/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-27/ubuntu-latest.json --repo Dineshpera/strue"
     },
     "windows-latest": {
       "status": "pass",
       "versions": {
         "express": "5.3.0"
       },
-      "duration_s": 10.2,
+      "duration_s": 7.0,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45804960565",
-      "finished_at": "2026-11-26T10:56:26Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-26/windows-latest.json",
-      "verify": "gh attestation verify results/2026-11-26/windows-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45985224436",
+      "finished_at": "2026-11-27T10:54:02Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-27/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-27/windows-latest.json --repo Dineshpera/strue"
     }
   },
   "history": [
@@ -129,6 +129,10 @@
     },
     {
       "date": "2026-11-26",
+      "status": "verified"
+    },
+    {
+      "date": "2026-11-27",
       "status": "verified"
     }
   ],

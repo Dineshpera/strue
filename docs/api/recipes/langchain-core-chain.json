@@ -11,8 +11,8 @@
   ],
   "notes": "A stand-in function plays the model, so no API key is needed. The check proves the import paths and the pipe composition still work.",
   "status": "verified",
-  "inspected_on": "2026-11-26",
-  "verified_streak_days": 14,
+  "inspected_on": "2026-11-27",
+  "verified_streak_days": 15,
   "files": {
     "check.py": "from langchain_core.messages import AIMessage\nfrom langchain_core.output_parsers import StrOutputParser\nfrom langchain_core.prompts import ChatPromptTemplate\nfrom langchain_core.runnables import RunnableLambda\n\nprompt = ChatPromptTemplate.from_messages(\n    [(\"system\", \"You are terse.\"), (\"human\", \"{question}\")]\n)\nfake_model = RunnableLambda(\n    lambda value: AIMessage(content=\"echo:\" + value.to_messages()[-1].content)\n)\nchain = prompt | fake_model | StrOutputParser()\nassert chain.invoke({\"question\": \"hi\"}) == \"echo:hi\"\nprint(\"strue-ok\")\n"
   },
@@ -37,13 +37,13 @@
         "langchain": "1.5.2",
         "langchain-core": "1.8.5"
       },
-      "duration_s": 16.9,
+      "duration_s": 10.8,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45804960565",
-      "finished_at": "2026-11-26T10:52:39Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-26/macos-latest.json",
-      "verify": "gh attestation verify results/2026-11-26/macos-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45985224436",
+      "finished_at": "2026-11-27T10:51:10Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-27/macos-latest.json",
+      "verify": "gh attestation verify results/2026-11-27/macos-latest.json --repo Dineshpera/strue"
     },
     "ubuntu-latest": {
       "status": "pass",
@@ -51,13 +51,13 @@
         "langchain": "1.5.2",
         "langchain-core": "1.8.5"
       },
-      "duration_s": 8.4,
+      "duration_s": 8.9,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45804960565",
-      "finished_at": "2026-11-26T10:51:23Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-26/ubuntu-latest.json",
-      "verify": "gh attestation verify results/2026-11-26/ubuntu-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45985224436",
+      "finished_at": "2026-11-27T10:50:20Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-27/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-27/ubuntu-latest.json --repo Dineshpera/strue"
     },
     "windows-latest": {
       "status": "pass",
@@ -65,13 +65,13 @@
         "langchain": "1.5.2",
         "langchain-core": "1.8.5"
       },
-      "duration_s": 19.9,
+      "duration_s": 14.2,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45804960565",
-      "finished_at": "2026-11-26T10:56:26Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-26/windows-latest.json",
-      "verify": "gh attestation verify results/2026-11-26/windows-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45985224436",
+      "finished_at": "2026-11-27T10:54:02Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-27/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-27/windows-latest.json --repo Dineshpera/strue"
     }
   },
   "history": [
@@ -129,6 +129,10 @@
     },
     {
       "date": "2026-11-26",
+      "status": "verified"
+    },
+    {
+      "date": "2026-11-27",
       "status": "verified"
     }
   ],
