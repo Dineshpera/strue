@@ -12,8 +12,8 @@
   ],
   "notes": "No network call is made and no real key is needed. The check proves the import path, the client constructor and the presence of the request surfaces.",
   "status": "verified",
-  "inspected_on": "2026-11-27",
-  "verified_streak_days": 15,
+  "inspected_on": "2026-11-28",
+  "verified_streak_days": 16,
   "files": {
     "check.py": "from openai import OpenAI\n\nclient = OpenAI(api_key=\"sk-not-a-real-key\")\nassert callable(client.responses.create)\nassert callable(client.chat.completions.create)\nassert callable(client.embeddings.create)\nprint(\"strue-ok\")\n",
     "stale.py": "import openai\n\nopenai.api_key = \"sk-not-a-real-key\"\nopenai.ChatCompletion.create(model=\"gpt-4\", messages=[])\n"
@@ -38,39 +38,39 @@
       "versions": {
         "openai": "3.60.0"
       },
-      "duration_s": 17.5,
+      "duration_s": 5.3,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45985224436",
-      "finished_at": "2026-11-27T10:51:10Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-27/macos-latest.json",
-      "verify": "gh attestation verify results/2026-11-27/macos-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/46134721162",
+      "finished_at": "2026-11-28T10:21:46Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-28/macos-latest.json",
+      "verify": "gh attestation verify results/2026-11-28/macos-latest.json --repo Dineshpera/strue"
     },
     "ubuntu-latest": {
       "status": "pass",
       "versions": {
         "openai": "3.60.0"
       },
-      "duration_s": 7.1,
+      "duration_s": 5.2,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45985224436",
-      "finished_at": "2026-11-27T10:50:20Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-27/ubuntu-latest.json",
-      "verify": "gh attestation verify results/2026-11-27/ubuntu-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/46134721162",
+      "finished_at": "2026-11-28T10:21:59Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-28/ubuntu-latest.json",
+      "verify": "gh attestation verify results/2026-11-28/ubuntu-latest.json --repo Dineshpera/strue"
     },
     "windows-latest": {
       "status": "pass",
       "versions": {
         "openai": "3.60.0"
       },
-      "duration_s": 12.7,
+      "duration_s": 23.7,
       "failed_step": null,
       "log_tail": "",
-      "run_url": "https://github.com/Dineshpera/strue/actions/runs/45985224436",
-      "finished_at": "2026-11-27T10:54:02Z",
-      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-27/windows-latest.json",
-      "verify": "gh attestation verify results/2026-11-27/windows-latest.json --repo Dineshpera/strue"
+      "run_url": "https://github.com/Dineshpera/strue/actions/runs/46134721162",
+      "finished_at": "2026-11-28T10:26:31Z",
+      "result_file": "https://github.com/Dineshpera/strue/blob/main/results/2026-11-28/windows-latest.json",
+      "verify": "gh attestation verify results/2026-11-28/windows-latest.json --repo Dineshpera/strue"
     }
   },
   "history": [
@@ -132,6 +132,10 @@
     },
     {
       "date": "2026-11-27",
+      "status": "verified"
+    },
+    {
+      "date": "2026-11-28",
       "status": "verified"
     }
   ],
